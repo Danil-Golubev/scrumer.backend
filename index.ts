@@ -1,6 +1,6 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import { createTeamValidation, registerValidation } from './validations/auth';
+import { createTeamValidation, registerValidation } from './utils/validations';
 import { authMe, login, register } from './requests/UserRequests';
 import { createTeam, getMyTeam, joinTeam } from './requests/TeamRequests';
 import { createTask } from './requests/TaskRequests';

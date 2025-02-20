@@ -2,6 +2,9 @@ import { validationResult } from 'express-validator';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import { User } from '../models/Models';
+import dotenv from 'dotenv';
+dotenv.config();
+
 export const register = async (req, res) => {
 	try {
 		const errors = validationResult(req);
@@ -23,7 +26,7 @@ export const register = async (req, res) => {
 			{
 				_id: user._id,
 			},
-			'secret123',
+			process.env.SECRET_KEY as string,
 			{ expiresIn: '30d' },
 		);
 		res.json({ ...user.toObject(), token });
