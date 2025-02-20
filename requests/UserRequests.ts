@@ -54,7 +54,7 @@ export const login = async (req, res) => {
 			{
 				_id: user._id,
 			},
-			'secret123',
+			process.env.SECRET_KEY as string,
 			{ expiresIn: '30d' },
 		);
 
