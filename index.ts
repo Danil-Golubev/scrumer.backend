@@ -6,6 +6,7 @@ import { createTeam, getMyTeam, joinTeam } from './requests/TeamRequests';
 import { createTask } from './requests/TaskRequests';
 import checkAuth from './utils/checkAuth';
 import dotenv from 'dotenv';
+import cors from 'cors';
 
 dotenv.config();
 const app = express();
@@ -18,6 +19,7 @@ mongoose
 		console.log('db error', err);
 	});
 app.use(express.json());
+app.use(cors());
 app.listen(4444, () => {
 	console.log('server ok');
 });
