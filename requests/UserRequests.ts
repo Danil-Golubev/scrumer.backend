@@ -1,7 +1,7 @@
 import { validationResult } from 'express-validator';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
-import { User } from '../models/Models';
+import { User, Team } from '../models/Models';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -66,10 +66,18 @@ export const login = async (req, res) => {
 
 export const authMe = async (req, res) => {
 	try {
-		const user = await User.findById(req.body.userId);
+		const user = await User.findById(req.body.userId).populate({
+			path: 'team',
+			populate: {
+				path: 'members.user', // Подгружаем пользователей в массиве members
+				model: 'User',
+			},
+		});
+
 		if (!user) {
 			return res.status(404).json({ message: 'Пользователь не найден' });
 		}
+
 		res.json(user.toObject());
 	} catch (err) {
 		res.status(500).json({ message: 'Нет доступа' });
