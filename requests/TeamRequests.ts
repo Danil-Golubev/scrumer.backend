@@ -21,7 +21,7 @@ export const createTeam = async (req, res) => {
 			deadline: req.body.deadline,
 			sprintDuration: req.body.sprintDuration,
 			members: [employee],
-			tasks: null,
+			tasks: [],
 		});
 		const team = await doc.save();
 		user.team = team._id as Schema.Types.ObjectId;

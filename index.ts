@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import { createTeamValidation, registerValidation } from './utils/validations';
 import { authMe, login, register } from './requests/UserRequests';
 import { createTeam, getMyTeam, joinTeam } from './requests/TeamRequests';
-import { createTask } from './requests/TaskRequests';
+import { changeTask, createTask, deleteTask, taskStatusChange } from './requests/TaskRequests';
 import checkAuth from './utils/checkAuth';
 import dotenv from 'dotenv';
 import cors from 'cors';
@@ -35,4 +35,7 @@ app.get('/team/getMyTeam', checkAuth, getMyTeam); // Просмотр своей
 
 // Task Запросы
 app.post('/task/create', checkAuth, createTask); // Присоединиться к команде
+app.post('/task/statuschange', checkAuth, taskStatusChange);
+app.post('/task/update', checkAuth, changeTask);
+app.post('/task/delete', checkAuth, deleteTask);
 // app.post('/task/update', checkAuth, createTask); // Присоединиться к команде

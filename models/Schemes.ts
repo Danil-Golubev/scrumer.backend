@@ -15,11 +15,15 @@ export const EmployeeSchema = new Schema<Employee>({
 	position: { type: String, required: true },
 });
 
-const TaskSchema = new Schema<ITask>({
-	performer: { type: mongoose.Schema.Types.ObjectId, ref: 'Employee', required: true },
+export const TaskSchema = new Schema<ITask>({
+	team: { type: Schema.Types.ObjectId, ref: 'Team', required: true },
+	performer: {
+		user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+		position: { type: String, required: true },
+	},
 	title: { type: String, required: true },
 	description: { type: String, required: true },
-	status: { type: String, enum: ['todo', 'in_progress', 'done'], default: 'todo' },
+	status: { type: String, enum: ['open', 'in_progress', 'closed', 'postponed'], default: 'open' },
 	deadline: { type: Date, required: true },
 });
 
@@ -29,5 +33,5 @@ export const TeamSchema = new Schema<iTeam>({
 	members: [EmployeeSchema], // Встроенная схема для удобства
 	deadline: { type: Date, required: true }, // Дата завершения проекта
 	sprintDuration: { type: Number, enum: [7, 14], required: true }, // 7 или 14 дней
-	tasks: [TaskSchema], // Храним задачи прямо в команде
+	tasks: [{ type: Schema.Types.ObjectId, ref: 'Task', required: true }], // Храним задачи прямо в команде
 });

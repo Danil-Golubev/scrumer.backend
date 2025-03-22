@@ -12,10 +12,11 @@ export type Employee = {
 	position: string; // Роль в команде
 };
 export interface ITask {
+	team: Schema.Types.ObjectId;
 	performer: Schema.Types.ObjectId; // ID сотрудника
 	title: string;
 	description: string;
-	status: 'todo' | 'in_progress' | 'done';
+	status: 'open' | 'in_progress' | 'closed' | 'postponed';
 	deadline: Date;
 }
 
@@ -25,5 +26,5 @@ export interface iTeam extends Document {
 	members: Employee[]; // Список участников с ролями
 	deadline: Date; // Дата завершения проекта
 	sprintDuration: number; // Длительность спринта в днях (7 или 14)
-	tasks: ITask[];
+	tasks: Schema.Types.ObjectId[];
 }

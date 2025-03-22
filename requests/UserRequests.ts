@@ -68,10 +68,20 @@ export const authMe = async (req, res) => {
 	try {
 		const user = await User.findById(req.body.userId).populate({
 			path: 'team',
-			populate: {
-				path: 'members.user', // Подгружаем пользователей в массиве members
-				model: 'User',
-			},
+			populate: [
+				{
+					path: 'members.user', // Подгружаем пользователей в members
+					model: 'User',
+				},
+				{
+					path: 'tasks', // Подгружаем задачи
+					model: 'Task',
+					populate: {
+						path: 'performer.user', // Попытка подгрузить user в performer
+						model: 'User',
+					},
+				},
+			],
 		});
 
 		if (!user) {
